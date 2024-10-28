@@ -1,7 +1,7 @@
 package routes
 
 import (
-	models "RestApi/events"
+	"RestApi/models"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -36,6 +36,7 @@ func getEventByID(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
+
 	var event models.Event
 	err := context.ShouldBindJSON(&event)
 
@@ -44,8 +45,9 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
-	// event.ID = 1
-	event.UserID = 1
+	// same key used in the send method
+	event.UserID = context.GetInt64("userId")
+
 	err = event.Save()
 
 	if err != nil {
