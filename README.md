@@ -59,3 +59,5 @@ Install external dependencies
     |-- hash.go
     `-- jwt.go
 ```
+
+## Acknowledgments
