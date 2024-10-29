@@ -1,0 +1,1 @@
+User and Event models for `POST`, `PUT`, `DELETE`, and `GET` requests

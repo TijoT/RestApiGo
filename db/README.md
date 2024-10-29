@@ -1,0 +1,1 @@
+Initialise SQLite3 database and create `users`, `events`, and `registrations` tables.
