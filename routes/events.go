@@ -2,7 +2,6 @@ package routes
 
 import (
 	"RestApi/models"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -66,10 +65,16 @@ func updateEvent(context *gin.Context) {
 		return
 	}
 
+	userId := context.GetInt64("userId")
 	// Check event exists with the ID
-	_, err = models.GetEventByID(eventId)
+	event, err := models.GetEventByID(eventId)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"Message": "Could not fetch event"})
+		return
+	}
+
+	if event.UserID != userId {
+		context.JSON(http.StatusUnauthorized, gin.H{"Message": "Not authorized to update event"})
 		return
 	}
 
@@ -100,6 +105,7 @@ func deleteEvent(context *gin.Context) {
 		return
 	}
 
+	userId := context.GetInt64("userId")
 	// Check event exists with the ID
 	existingEvent, err := models.GetEventByID(eventId)
 	if err != nil {
@@ -107,7 +113,10 @@ func deleteEvent(context *gin.Context) {
 		return
 	}
 
-	fmt.Println(existingEvent)
+	if existingEvent.UserID != userId {
+		context.JSON(http.StatusUnauthorized, gin.H{"Message": "Not authorized to delete event"})
+		return
+	}
 
 	err = existingEvent.Delete()
 	if err != nil {
