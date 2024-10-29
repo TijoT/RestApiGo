@@ -20,7 +20,7 @@ Install external dependencies
 * [crypto](https://github.com/golang/crypto)
 
 ## Layout
-
+```bash
 .
 |-- README.md
 |-- api-test
@@ -58,3 +58,4 @@ Install external dependencies
     |-- README.md
     |-- hash.go
     `-- jwt.go
+```
